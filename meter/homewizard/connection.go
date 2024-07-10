@@ -64,8 +64,6 @@ func NewConnection(uri string, cache time.Duration) (*Connection, error) {
 	return c, nil
 }
 
-var _ api.Charger = (*Connection)(nil)
-
 // Enable implements the api.Charger interface
 func (c *Connection) Enable(enable bool) error {
 	var res StateResponse
