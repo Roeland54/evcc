@@ -63,6 +63,8 @@ func NewConnection(uri string, cache time.Duration) (*Connection, error) {
 	return c, nil
 }
 
+var _ api.Charger = (*Connection)(nil)
+
 // Enable implements the api.Charger interface
 func (c *Connection) Enable(enable bool) error {
 	var res StateResponse
@@ -97,11 +99,15 @@ func (c *Connection) Enabled() (bool, error) {
 	return res.PowerOn, err
 }
 
+var _ api.Meter = (*Connection)(nil)
+
 // CurrentPower implements the api.Meter interface
 func (c *Connection) CurrentPower() (float64, error) {
 	res, err := c.dataG.Get()
 	return res.ActivePowerW, err
 }
+
+var _ api.MeterEnergy = (*Connection)(nil)
 
 // TotalEnergy implements the api.MeterEnergy interface
 func (c *Connection) TotalEnergy() (float64, error) {
@@ -109,11 +115,15 @@ func (c *Connection) TotalEnergy() (float64, error) {
 	return res.TotalPowerImportT1kWh + res.TotalPowerImportT2kWh + res.TotalPowerImportT3kWh + res.TotalPowerImportT4kWh, err
 }
 
+var _ api.PhaseCurrents = (*Connection)(nil)
+
 // Currents implements the api.PhaseCurrents interface
 func (c *Connection) Currents() (float64, float64, float64, error) {
 	res, err := c.dataG.Get()
 	return res.ActiveCurrentL1A, res.ActiveCurrentL2A, res.ActiveCurrentL3A, err
 }
+
+var _ api.PhaseVoltages = (*Connection)(nil)
 
 // Voltages implements the api.PhaseVoltages interface
 func (c *Connection) Voltages() (float64, float64, float64, error) {
