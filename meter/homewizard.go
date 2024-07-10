@@ -73,5 +73,5 @@ var _ api.PhaseVoltages = (*HomeWizard)(nil)
 
 // Voltages implements the api.PhaseVoltages interface
 func (c *HomeWizard) Voltages() (float64, float64, float64, error) {
-	return  c.conn.Voltages()
+	return c.conn.Voltages()
 }
